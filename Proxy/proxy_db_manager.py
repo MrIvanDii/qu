@@ -33,12 +33,13 @@ class ProxyDBmanager:
         create_table_query = """
                     CREATE TABLE IF NOT EXISTS proxies (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        ip TEXT UNIQUE,
+                        ip TEXT,
                         Port INT,
                         format TEXT,
                         country TEXT,
                         work_status INT DEFAULT 1,
-                        using_status INT DEFAULT 0
+                        using_status INT DEFAULT 0,
+                        UNIQUE(ip, port)
                     );
                     """
         # Выполнение SQL запроса
@@ -46,3 +47,8 @@ class ProxyDBmanager:
             print(f'Table "proxies" was successfully installed into ({self.db_path}) data base')
         else:
             print('Table "proxies" was not installed')
+
+
+# if __name__ == "__main__":
+#     db_test = ProxyDBmanager()
+#     db_test.create_table_proxies()

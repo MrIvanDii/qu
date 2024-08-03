@@ -46,26 +46,36 @@ class GeoNode:
 
     def data_collection_proces(self):
 
+        geo_data = []
+
         url = self.base_url
 
         flag = True
 
         while flag is True:
+
             j_dat = self.get_page_html(page_url=url)
-            if len(j_dat) == 500:
+            geo_data.append(j_dat['data'])
+
+            elements = len(j_dat)
+
+            if elements == 500:
                 flag = True
-            if len(j_dat) < 500:
+            if elements < 500:
                 flag = False
 
+        return geo_data
 
 
 if __name__ == "__main__":
     pg_url = 'https://proxylist.geonode.com/api/proxy-list?limit=500&page=1&sort_by=lastChecked&sort_type=desc'
     geo_manager = GeoNode()
-    j_data = geo_manager.get_page_html(page_url=pg_url)
-    # print(len(j_data['data']))
-    for _ in j_data['data']:
-        print(_)
-        # print(f'{_}: ', j_data[_])
+
+    # print(geo_manager.data_collection_proces())
+    # j_data = geo_manager.get_page_html(page_url=pg_url)
+    # # print(len(j_data['data']))
+    # for _ in j_data['data']:
+    #     print(_)
+    #     # print(f'{_}: ', j_data[_])
 
     # print(geo_manager.get_page_number(pg_url))
